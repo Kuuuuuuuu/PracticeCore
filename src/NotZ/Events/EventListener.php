@@ -12,6 +12,7 @@ use pocketmine\event\Listener;
 use pocketmine\item\enchantment\{Enchantment, EnchantmentInstance};
 use pocketmine\item\Item;
 use pocketmine\level\sound\GhastShootSound;
+use pocketmine\item\EnderPearl;
 use pocketmine\event\entity\ProjectileLaunchEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
@@ -34,6 +35,7 @@ use pocketmine\utils\Config;
 class EventListener implements Listener
 {
     public $listener;
+    private $pearlcd;
     
     public function __construct(Core $listener)
     {
