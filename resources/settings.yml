@@ -1,0 +1,16 @@
+# Scoreboard settings
+
+color-title: "§e"
+color-left: "§a"
+color-right: "§f"
+server-address: "§6myserver.ddns.net"
+
+# Slapper Size - normal size is: 1
+
+slapper-size: 1.5
+
+# Item id and name Spectator
+
+item-slot: 0
+item-id: "345:0"
+item-name: "§6§lOrange§cPVP §aClick to Respawn"
