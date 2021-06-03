@@ -7,12 +7,14 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\entity\Entity;
 use pocketmine\utils\TextFormat as Color;
-
+use pocketmine\scheduler\Task;
 use NotZ\Execute\Commands;
 use NotZ\Execute\HUB;
 use NotZ\Events\EventListener;
-use NotZ\utils\{Entities\JoinCore, Entities\CoreStatus};
+use NotZ\utils\Entities\JoinCore;
 use NotZ\Task\EntityTask;
+use NotZ\Task\CPSTask;
+use NotZ\Execute\TPS;
 use NotZ\Arena\{Arena, ArenaCreator};
 
 class Core extends PluginBase implements Listener {
@@ -38,14 +40,13 @@ class Core extends PluginBase implements Listener {
 		
 		$this->getServer()->getCommandMap()->register("core", new Commands($this));
 		$this->getServer()->getCommandMap()->register("hub", new HUB($this));
+		$this->getServer()->getCommandMap()->register("tps", new TPS($this));
 		
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 		
 		new EntityTask($this);
 		
 		Entity::registerEntity(JoinCore::class, true);
-		
-		Entity::registerEntity(CoreStatus::class, true);
 		
 		@mkdir($this->getDataFolder());
 		
@@ -54,7 +55,7 @@ class Core extends PluginBase implements Listener {
 		@mkdir($this->getDataFolder() . "data/");
 		
 		$this->saveResource("/settings.yml");
-		
+		$this->getScheduler()->scheduleRepeatingTask(new CPSTask($this), 2);
 	}
 	
 	public function getPrefix() {
