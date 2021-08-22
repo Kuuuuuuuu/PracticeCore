@@ -1,6 +1,3 @@
-# BerryCore
+#BerryCore
 
-##Todo list
-
-1.Improve Kit 
-2.Fix Event
+Just My old Server Core And Now is outdated!
