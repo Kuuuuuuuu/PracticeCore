@@ -1,3 +1,3 @@
 # BerryCore
 
-## Just My old Server Core And Still Updated!
+## Just My old Server Core!
