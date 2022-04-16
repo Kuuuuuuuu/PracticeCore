@@ -41,22 +41,16 @@ class EventListener implements Listener
                 return true;
             }
             switch ($result) {
+                // here just find the plugin for this
                 case 0:
                     $command = "report";
                     Server::getInstance()->dispatchcommand($player, $command);
                     break;
-
                 case 1:
-                    $command = "sprint";
-                    Server::getInstance()->dispatchcommand($player, $command);
-                    break;
-
-                case 2:
                     $command = "cape";
                     Server::getInstance()->dispatchcommand($player, $command);
                     break;
-
-                case 3:
+                case 2:
                     $command = "nick";
                     Server::getInstance()->dispatchcommand($player, $command);
                     break;
@@ -65,7 +59,6 @@ class EventListener implements Listener
         });
         $form->setTitle("§cBerry §eSettings");
         $form->addButton("§6Reports §fPlayers", 0, "textures/items/iron_sword");
-        $form->addButton("§6Auto §fSprint", 0, "textures/items/diamond_boots");
         $form->addButton("§6Change §fCape", 0, "textures/items/ender_pearl");
         $form->addButton("§6Change §fName", 0, "textures/items/snowball");
         $form->sendToPlayer($player);
