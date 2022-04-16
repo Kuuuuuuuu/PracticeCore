@@ -2,50 +2,39 @@
 
 namespace NotZ\Execute;
 
-use pocketmine\Player;
-use pocketmine\item\enchantment\{Enchantment, EnchantmentInstance};
-use pocketmine\item\Item;
-use pocketmine\command\PluginCommand;
-use pocketmine\command\CommandSender;
-
-
 use NotZ\Core;
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+use pocketmine\item\enchantment\{EnchantmentInstance, VanillaEnchantments};
+use pocketmine\item\VanillaItems;
+use pocketmine\player\GameMode;
+use pocketmine\player\Player;
 
-class Hub extends PluginCommand
+
+class HUB extends Command
 {
-	
-	private $plugin;
-	
-	public function __construct(Core $plugin)
-	{
-		parent::__construct("hub", $plugin);
-		$this->plugin = $plugin;
-		$this->setDescription("Back to Spawn");
-	}
-	
-	public function execute(CommandSender $d, $label, array $args)
-	{
-		Enchantment::registerEnchantment(new Enchantment(100, "", 0, 0, 0, 1));
-        $enchantment = Enchantment::getEnchantment(100);
-        $this->enchInst = new EnchantmentInstance($enchantment, 1);
-		if($d instanceof Player){
-			$d->getInventory()->clearAll();
-		    $d->getArmorInventory()->clearAll();
-		    $d->removeAllEffects();
-		    $d->setGamemode(2);
-		    $d->setScale(1);
-		    $d->setAllowFlight(false);
-		    $d->teleport($this->plugin->getServer()->getDefaultLevel()->getSafeSpawn());
-		    $d->sendMessage("§cBerry §f>> §bWelcome to Spawn§e ".$d->getName());
-			$item = Item::get(345);
-            $item->setCustomName('§aPlay §f| §bClick to use');
-            $item->addEnchantment($this->enchInst);
-            $d->getInventory()->setItem(4, $item, true);
-            $item2 = Item::get(347);
-            $item2->setCustomName('§bSettings §f| §bClick to use');
-            $item2->addEnchantment($this->enchInst);
-            $d->getInventory()->setItem(8, $item2, true);
-		}
-	}
+
+    public function __construct()
+    {
+        parent::__construct("hub", "back to spawn", null, ["spawn", "lobby"]);
+    }
+
+    public function execute(CommandSender $sender, string $commandCommandLabel, array $args)
+    {
+        if ($sender instanceof Player) {
+            $sender->getInventory()->clearAll();
+            $sender->getArmorInventory()->clearAll();
+            $sender->getEffects()->clear();
+            $sender->setGamemode(GameMode::ADVENTURE());
+            $sender->setScale(1);
+            $sender->setAllowFlight(false);
+            $sender->teleport(Core::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSafeSpawn());
+            $sender->sendMessage("§cBerry §f>> §bWelcome to Spawn§e " . $sender->getName());
+            $item = VanillaItems::IRON_SWORD()->setCustomName('§aPlay §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));
+            $item2 = VanillaItems::BOW()->setCustomName('§bSettings §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));
+            $sender->getInventory()->setItem(8, $item2);
+            $sender->getInventory()->setItem(4, $item);
+        }
+    }
 }
 
