@@ -1,6 +1,6 @@
 <?php
 
-namespace Shouldz\utils\FormAPI;
+namespace NotZ\utils\FormAPI;
 
 use NotZ\utils\FormAPI\Form;
 

@@ -30,6 +30,11 @@ class Core extends PluginBase
         return self::$instance;
     }
 
+    public static function getPrefix(): string
+    {
+        return "§cBerry §f>> ";
+    }
+
     public function onLoad(): void
     {
         Core::$creator = new ArenaCreator();
@@ -47,10 +52,5 @@ class Core extends PluginBase
         @mkdir($this->getDataFolder() . "players/");
         @mkdir($this->getDataFolder() . "data/");
         $this->saveResource("/settings.yml");
-    }
-
-    public static function getPrefix(): string
-    {
-        return "§cBerry §f>> ";
     }
 }

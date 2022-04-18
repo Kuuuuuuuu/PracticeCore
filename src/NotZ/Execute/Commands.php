@@ -6,6 +6,7 @@ use JsonException;
 use NotZ\Core;
 use NotZ\utils\Permissions;
 use pocketmine\command\{Command, CommandSender};
+use pocketmine\permission\DefaultPermissions;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat as Color;
@@ -28,20 +29,20 @@ class Commands extends Command
                 $sender->sendMessage(Color::BOLD . Color::WHITE . "» " . Color::RESET . Color::RED . "use /core help");
                 return false;
             }
+            if (!$sender->hasPermission(DefaultPermissions::ROOT_OPERATOR)) {
+                $sender->sendMessage(Color::BOLD . Color::WHITE . "» " . Color::RESET . Color::RED . "You don't have permission to use this command");
+                return false;
+            }
             switch ($args[0]) {
                 case "help":
                     if (!$sender->hasPermission(Permissions::CORE_ADMIN)) {
                         $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::RED . "You don't have enough permissions to use this command");
                         return false;
                     }
-                    $sender->sendMessage(Color::BOLD . Color::YELLOW . "=== FFA CORE ===");
                     $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " make <mode> <world>" . Color::GOLD . " - create new Arena for FFA");
                     $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " spawn <mode>" . Color::GOLD . " - set spawn Arena for FFA");
                     $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " remove <mode>" . Color::GOLD . " - delete Arena for FFA");
                     $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
-                    $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " set-slapper" . Color::GOLD . " - set Slapper Join for FFA");
-                    $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " set-tops" . Color::GOLD . " - set Tops for FFA");
-                    $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " del-slapper" . Color::GOLD . " - killed Slappers");
                     break;
                 case "make":
                 case "create":
@@ -110,10 +111,8 @@ class Commands extends Command
                             break;
 
                         default:
-
                             $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core make <mode> <world>");
                             $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
-
                             break;
                     }
                     break;

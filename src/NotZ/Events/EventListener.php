@@ -3,6 +3,7 @@
 namespace NotZ\Events;
 
 use NotZ\Core;
+use NotZ\utils\FormAPI\CustomForm;
 use NotZ\utils\FormAPI\SimpleForm;
 use pocketmine\event\block\{BlockBreakEvent, BlockPlaceEvent};
 use pocketmine\event\entity\{EntityDamageByEntityEvent, EntityDamageEvent, EntityTeleportEvent};
@@ -51,8 +52,20 @@ class EventListener implements Listener
                     Server::getInstance()->dispatchcommand($player, $command);
                     break;
                 case 2:
-                    $command = "nick";
-                    Server::getInstance()->dispatchcommand($player, $command);
+                    $form = new CustomForm(function (Player $player, array $data = null) {
+                        $result = $data;
+                        if ($result === null) {
+                            return true;
+                        }
+                        $name = $result[0];
+                        $player->setDisplayName($name);
+                        $player->setNameTag($name);
+                        $player->sendMessage(Core::getPrefix() . "Your name has been changed to " . $name);
+                        return true;
+                    });
+                    $form->setTitle(Color::GREEN . "Change your name");
+                    $form->addInput(Color::GREEN . "Your name");
+                    $form->sendToPlayer($player);
                     break;
             }
             return true;
@@ -139,7 +152,7 @@ class EventListener implements Listener
             }
         }
     }
-    
+
     public function onDamageFall(EntityDamageEvent $ev)
     {
         $player = $ev->getEntity();

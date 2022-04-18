@@ -78,8 +78,8 @@ class ArenaCreator
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
         $data->set("Gapple", $world);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Gapple Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GOLD . "use /core spawn gapple - to select the spawn");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Gapple Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GOLD . "use /core spawn gapple - to select the spawn");
 
     }
 
@@ -95,7 +95,7 @@ class ArenaCreator
         $xyz = array($x, $y, $z);
         $data->set("Gapple-Spawn", $xyz);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Gapple spawn saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Gapple spawn saved successfully");
     }
 
     /**
@@ -107,7 +107,7 @@ class ArenaCreator
         $data->remove("Gapple");
         $data->remove("Gapple-Spawn");
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::RED . "Gapple removed arena");
+        $player->sendMessage(Core::getPrefix() . Color::RED . "Gapple removed arena");
     }
 
     /**
@@ -118,8 +118,8 @@ class ArenaCreator
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
         $data->set("Combo", $world);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Combo Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GOLD . "use /core spawn combo - to select the spawn");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Combo Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GOLD . "use /core spawn combo - to select the spawn");
 
     }
 
@@ -135,7 +135,7 @@ class ArenaCreator
         $xyz = array($x, $y, $z);
         $data->set("Combo-Spawn", $xyz);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Combo spawn saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Combo spawn saved successfully");
     }
 
     /**
@@ -147,7 +147,7 @@ class ArenaCreator
         $data->remove("Combo");
         $data->remove("Combo-Spawn");
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::RED . "Combo removed arena");
+        $player->sendMessage(Core::getPrefix() . Color::RED . "Combo removed arena");
     }
 
     /**
@@ -158,8 +158,8 @@ class ArenaCreator
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
         $data->set("Debuff", $world);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Debuff Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GOLD . "use /core spawn debuff - to select the spawn");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Debuff Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GOLD . "use /core spawn debuff - to select the spawn");
 
     }
 
@@ -175,7 +175,7 @@ class ArenaCreator
         $xyz = array($x, $y, $z);
         $data->set("Debuff-Spawn", $xyz);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Debuff spawn saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Debuff spawn saved successfully");
     }
 
     /**
@@ -187,7 +187,7 @@ class ArenaCreator
         $data->remove("Debuff");
         $data->remove("Debuff-Spawn");
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::RED . "Debuff removed arena");
+        $player->sendMessage(Core::getPrefix() . Color::RED . "Debuff removed arena");
     }
 
     /**
@@ -198,8 +198,8 @@ class ArenaCreator
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
         $data->set("Fist", $world);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Fist Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GOLD . "use /core spawn fist - to select the spawn");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Fist Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GOLD . "use /core spawn fist - to select the spawn");
 
     }
 
@@ -215,7 +215,7 @@ class ArenaCreator
         $xyz = array($x, $y, $z);
         $data->set("Fist-Spawn", $xyz);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Fist spawn saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Fist spawn saved successfully");
     }
 
     /**
@@ -227,7 +227,7 @@ class ArenaCreator
         $data->remove("Fist");
         $data->remove("Fist-Spawn");
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::RED . "Fist removed arena");
+        $player->sendMessage(Core::getPrefix() . Color::RED . "Fist removed arena");
     }
 
     /**
@@ -238,8 +238,8 @@ class ArenaCreator
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
         $data->set("Resistance", $world);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Resistance Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GOLD . "use /core spawn Resistance - to select the spawn");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Resistance Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GOLD . "use /core spawn Resistance - to select the spawn");
 
     }
 
@@ -255,7 +255,7 @@ class ArenaCreator
         $xyz = array($x, $y, $z);
         $data->set("Resistance-Spawn", $xyz);
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::GREEN . "Resistance spawn saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Resistance spawn saved successfully");
     }
 
     /**
@@ -267,6 +267,6 @@ class ArenaCreator
         $data->remove("Resistance");
         $data->remove("Resistace-Spawn");
         $data->save();
-        $player->sendMessage(Core::getInstance()->getPrefix() . Color::RED . "Resistance removed arena");
+        $player->sendMessage(Core::getPrefix() . Color::RED . "Resistance removed arena");
     }
 }

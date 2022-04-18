@@ -29,7 +29,7 @@ class HUB extends Command
             $sender->setScale(1);
             $sender->setAllowFlight(false);
             $sender->teleport(Core::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSafeSpawn());
-            $sender->sendMessage("§cBerry §f>> §bWelcome to Spawn§e " . $sender->getName());
+            $sender->sendMessage(Core::getPrefix() . "§bWelcome to Spawn§e " . $sender->getName());
             $item = VanillaItems::IRON_SWORD()->setCustomName('§aPlay §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));
             $item2 = VanillaItems::BOW()->setCustomName('§bSettings §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));
             $sender->getInventory()->setItem(8, $item2);
