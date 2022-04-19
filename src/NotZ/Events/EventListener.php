@@ -8,7 +8,7 @@ use NotZ\utils\FormAPI\SimpleForm;
 use pocketmine\event\block\{BlockBreakEvent, BlockPlaceEvent};
 use pocketmine\event\entity\{EntityDamageByEntityEvent, EntityDamageEvent, EntityTeleportEvent};
 use pocketmine\event\Listener;
-use pocketmine\event\player\{PlayerDeathEvent, PlayerDropItemEvent, PlayerInteractEvent, PlayerRespawnEvent};
+use pocketmine\event\player\{PlayerDeathEvent, PlayerDropItemEvent, PlayerItemUseEvent, PlayerRespawnEvent};
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\enchantment\{EnchantmentInstance, VanillaEnchantments};
@@ -23,7 +23,7 @@ class EventListener implements Listener
 {
     private array $pearlcd = [];
 
-    public function onInteract(PlayerInteractEvent $e)
+    public function onUseItem(PlayerItemUseEvent $e)
     {
         $player = $e->getPlayer();
         $item = $e->getItem();
@@ -178,8 +178,8 @@ class EventListener implements Listener
             if ($cause instanceof EntityDamageByEntityEvent) {
                 $damager = $cause->getDamager();
                 if ($damager instanceof Player) {
-                    foreach ($damager->getWorld()->getPlayers() as $players) {
-                        $players->sendMessage(Core::getPrefix() . Color::RED . $player->getName() . Color::GRAY . " was killed by " . Color::GREEN . $damager->getName());
+                    foreach([$damager, $player] as $p) {
+                        $p->sendMessage(Core::getPrefix() . Color::RED . $player->getName() . Color::GRAY . " was killed by " . Color::GREEN . $damager->getName());
                     }
                     Core::getArena()->getReKit($damager);
                     $damager->setHealth($damager->getMaxHealth());
