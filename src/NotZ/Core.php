@@ -54,7 +54,7 @@ class Core extends PluginBase
     {
         foreach (PotionType::getAll() as $type) {
             $typeId = PotionTypeIdMap::getInstance()->toId($type);
-            ItemFactory::getInstance()->register(new CustomSplashPotion(new ItemIdentifier(ItemIds::SPLASH_POTION, $typeId), $type->getDisplayName() . " Splash Potion", $type));
+            ItemFactory::getInstance()->register(new CustomSplashPotion(new ItemIdentifier(ItemIds::SPLASH_POTION, $typeId), $type->getDisplayName() . " Splash Potion", $type), true);
         }
         $this->getScheduler()->scheduleRepeatingTask(new ScoreTagTask(), 3);
         $this->getServer()->getCommandMap()->register("core", new Commands());
