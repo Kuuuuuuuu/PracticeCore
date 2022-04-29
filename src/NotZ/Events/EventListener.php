@@ -29,9 +29,9 @@ class EventListener implements Listener
         $item = $e->getItem();
         if ($item instanceof EnderPearl) {
             $cooldown = 10;
-            $player = $event->getPlayer();
+            $player = $e->getPlayer();
             if (isset($this->pearlcd[$player->getName()]) and time() - $this->pearlcd[$player->getName()] < $cooldown) {
-                $event->cancel();
+                $e->cancel();
                 $time = time() - $this->pearlcd[$player->getName()];
                 $message = (Core::getPrefix() . "§bEnder Pearl Cooldown §e{cooldown}");
                 $message = str_replace("{cooldown}", ($cooldown - $time), $message);
