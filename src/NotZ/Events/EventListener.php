@@ -5,14 +5,20 @@ namespace NotZ\Events;
 use NotZ\Core;
 use NotZ\utils\FormAPI\CustomForm;
 use NotZ\utils\FormAPI\SimpleForm;
+use pocketmine\entity\projectile\SplashPotion;
 use pocketmine\event\block\{BlockBreakEvent, BlockPlaceEvent};
-use pocketmine\event\entity\{EntityDamageByEntityEvent, EntityDamageEvent, EntityTeleportEvent};
+use pocketmine\event\entity\{EntityDamageByEntityEvent,
+    EntityDamageEvent,
+    EntityTeleportEvent,
+    ProjectileHitBlockEvent
+};
 use pocketmine\event\Listener;
 use pocketmine\event\player\{PlayerDeathEvent, PlayerDropItemEvent, PlayerItemUseEvent, PlayerRespawnEvent};
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\enchantment\{EnchantmentInstance, VanillaEnchantments};
 use pocketmine\item\EnderPearl;
+use pocketmine\item\PotionType;
 use pocketmine\item\VanillaItems;
 use pocketmine\player\GameMode;
 use pocketmine\player\Player;
@@ -89,6 +95,17 @@ class EventListener implements Listener
         $form->addButton("§6Change §fName", 0, "textures/items/snowball");
         $form->sendToPlayer($player);
         return true;
+    }
+
+    public function onHit(ProjectileHitBlockEvent $event)
+    {
+        $projectile = $event->getEntity();
+        if ($projectile instanceof SplashPotion and $projectile->getPotionType() === PotionType::STRONG_HEALING()) {
+            $player = $projectile->getOwningEntity();
+            if ($player instanceof Player and $player->isAlive() and $projectile->getPosition()->distance($player->getPosition()) <= 3) {
+                $player->setHealth($player->getHealth() + 5);
+            }
+        }
     }
 
     public function PlayerJoin(PlayerJoinEvent $event)
@@ -173,7 +190,7 @@ class EventListener implements Listener
             if ($cause instanceof EntityDamageByEntityEvent) {
                 $damager = $cause->getDamager();
                 if ($damager instanceof Player) {
-                    foreach([$damager, $player] as $p) {
+                    foreach ([$damager, $player] as $p) {
                         $p->sendMessage(Core::getPrefix() . Color::RED . $player->getName() . Color::GRAY . " was killed by " . Color::GREEN . $damager->getName());
                     }
                     Core::getArena()->getReKit($damager);
