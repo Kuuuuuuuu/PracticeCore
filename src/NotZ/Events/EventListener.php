@@ -104,7 +104,7 @@ class EventListener implements Listener
         if ($projectile instanceof SplashPotion and $projectile->getPotionType() === PotionType::STRONG_HEALING()) {
             $player = $projectile->getOwningEntity();
             if ($player instanceof Player and $player->isAlive() and $projectile->getPosition()->distance($player->getPosition()) <= 3) {
-                $player->setHealth($player->getHealth() + 5);
+                $player->setHealth($player->getHealth() + 3.5);
             }
         }
     }
