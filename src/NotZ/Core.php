@@ -9,7 +9,6 @@ use NotZ\Events\EventListener;
 use NotZ\Execute\Commands;
 use NotZ\Execute\HUB;
 use pocketmine\data\bedrock\PotionTypeIdMap;
-use pocketmine\item\CustomSplashPotion;
 use pocketmine\item\ItemFactory;
 use pocketmine\item\ItemIdentifier;
 use pocketmine\item\ItemIds;
