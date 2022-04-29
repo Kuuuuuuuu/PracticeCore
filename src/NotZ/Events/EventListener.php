@@ -113,6 +113,7 @@ class EventListener implements Listener
     {
         $player = $event->getPlayer();
         $player->setGamemode(GameMode::ADVENTURE());
+        $player->teleport(Server::getInstance()->getWorldManager()->getDefaultWorld()->getSafeSpawn());
         Core::getCPSCounter()->initPlayerClickData($player);
         $player->getInventory()->clearAll();
         $player->getArmorInventory()->clearAll();
@@ -126,6 +127,7 @@ class EventListener implements Listener
     {
         $player = $event->getPlayer();
         $player->setGamemode(GameMode::ADVENTURE());
+        $player->teleport(Server::getInstance()->getWorldManager()->getDefaultWorld()->getSafeSpawn());
         $player->getInventory()->clearAll();
         Core::getCPSCounter()->removePlayerClickData($player);
         $player->getArmorInventory()->clearAll();
