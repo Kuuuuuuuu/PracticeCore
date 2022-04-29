@@ -27,6 +27,19 @@ class EventListener implements Listener
     {
         $player = $e->getPlayer();
         $item = $e->getItem();
+        if ($item instanceof EnderPearl) {
+            $cooldown = 10;
+            $player = $event->getPlayer();
+            if (isset($this->pearlcd[$player->getName()]) and time() - $this->pearlcd[$player->getName()] < $cooldown) {
+                $event->cancel();
+                $time = time() - $this->pearlcd[$player->getName()];
+                $message = (Core::getPrefix() . "§bEnder Pearl Cooldown §e{cooldown}");
+                $message = str_replace("{cooldown}", ($cooldown - $time), $message);
+                $player->sendMessage($message);
+            } else {
+                $this->pearlcd[$player->getName()] = time();
+            }
+        }
         if ($item->getCustomName() === '§bSettings §f| §bClick to use') {
             $this->mForm($player);
         } else if ($item->getCustomName() === '§aPlay §f| §bClick to use') {
@@ -131,24 +144,6 @@ class EventListener implements Listener
                 $player->setMaxHealth(20);
                 $player->setHealth(20);
                 $player->setGamemode(GameMode::ADVENTURE());
-            }
-        }
-    }
-
-    public function onEnderPearl(PlayerInteractEvent $event)
-    {
-        $item = $event->getItem();
-        if ($item instanceof EnderPearl) {
-            $cooldown = 10;
-            $player = $event->getPlayer();
-            if (isset($this->pearlcd[$player->getName()]) and time() - $this->pearlcd[$player->getName()] < $cooldown) {
-                $event->cancel();
-                $time = time() - $this->pearlcd[$player->getName()];
-                $message = (Core::getPrefix() . "§bEnder Pearl Cooldown §e{cooldown}");
-                $message = str_replace("{cooldown}", ($cooldown - $time), $message);
-                $player->sendMessage($message);
-            } else {
-                $this->pearlcd[$player->getName()] = time();
             }
         }
     }
