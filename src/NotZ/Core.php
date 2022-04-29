@@ -8,6 +8,12 @@ use NotZ\Events\CPSCounter;
 use NotZ\Events\EventListener;
 use NotZ\Execute\Commands;
 use NotZ\Execute\HUB;
+use pocketmine\data\bedrock\PotionTypeIdMap;
+use pocketmine\item\CustomSplashPotion;
+use pocketmine\item\ItemFactory;
+use pocketmine\item\ItemIdentifier;
+use pocketmine\item\ItemIds;
+use pocketmine\item\PotionType;
 use pocketmine\plugin\PluginBase;
 
 class Core extends PluginBase
@@ -25,11 +31,6 @@ class Core extends PluginBase
     public static function getArena(): Arena
     {
         return Core::$arena;
-    }
-
-    public static function getInstance(): Core
-    {
-        return self::$instance;
     }
 
     public static function getPrefix(): string
@@ -52,6 +53,10 @@ class Core extends PluginBase
 
     public function onEnable(): void
     {
+        foreach (PotionType::getAll() as $type) {
+            $typeId = PotionTypeIdMap::getInstance()->toId($type);
+            ItemFactory::getInstance()->register(new CustomSplashPotion(new ItemIdentifier(ItemIds::SPLASH_POTION, $typeId), $type->getDisplayName() . " Splash Potion", $type));
+        }
         $this->getScheduler()->scheduleRepeatingTask(new ScoreTagTask(), 3);
         $this->getServer()->getCommandMap()->register("core", new Commands());
         $this->getServer()->getCommandMap()->register("hub", new HUB());
@@ -60,5 +65,10 @@ class Core extends PluginBase
         @mkdir($this->getDataFolder() . "players/");
         @mkdir($this->getDataFolder() . "data/");
         $this->saveResource("/settings.yml");
+    }
+
+    public static function getInstance(): Core
+    {
+        return self::$instance;
     }
 }
