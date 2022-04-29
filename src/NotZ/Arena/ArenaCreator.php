@@ -34,16 +34,16 @@ class ArenaCreator
         return $data->get("Combo-Spawn");
     }
 
-    public function getDebuffArena()
+    public function getNodebuffArena()
     {
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
-        return $data->get("Debuff");
+        return $data->get("Nodebuff");
     }
 
-    public function getDebuffSpawn()
+    public function getNodebuffSpawn()
     {
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
-        return $data->get("Debuff-Spawn");
+        return $data->get("Nodebuff-Spawn");
     }
 
     public function getResistanceArena()
@@ -153,41 +153,41 @@ class ArenaCreator
     /**
      * @throws JsonException
      */
-    public function setDebuffArena(Player $player, string $world): void
+    public function setNodebuffArena(Player $player, string $world): void
     {
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
-        $data->set("Debuff", $world);
+        $data->set("Nodebuff", $world);
         $data->save();
-        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Debuff Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
-        $player->sendMessage(Core::getPrefix() . Color::GOLD . "use /core spawn debuff - to select the spawn");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Nodebuff Arena: " . Color::YELLOW . $world . Color::GREEN . " saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GOLD . "use /core spawn Nodebuff - to select the spawn");
 
     }
 
     /**
      * @throws JsonException
      */
-    public function setDebuffSpawn(Player $player): void
+    public function setNodebuffSpawn(Player $player): void
     {
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
         $x = $player->getPosition()->getX();
         $y = $player->getPosition()->getY();
         $z = $player->getPosition()->getZ();
         $xyz = array($x, $y, $z);
-        $data->set("Debuff-Spawn", $xyz);
+        $data->set("Nodebuff-Spawn", $xyz);
         $data->save();
-        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Debuff spawn saved successfully");
+        $player->sendMessage(Core::getPrefix() . Color::GREEN . "Nodebuff spawn saved successfully");
     }
 
     /**
      * @throws JsonException
      */
-    public function removeDebuff(Player $player): void
+    public function removeNodebuff(Player $player): void
     {
         $data = new Config (Core::getInstance()->getDataFolder() . "data/arenas.yml", Config::YAML);
-        $data->remove("Debuff");
-        $data->remove("Debuff-Spawn");
+        $data->remove("Nodebuff");
+        $data->remove("Nodebuff-Spawn");
         $data->save();
-        $player->sendMessage(Core::getPrefix() . Color::RED . "Debuff removed arena");
+        $player->sendMessage(Core::getPrefix() . Color::RED . "Nodebuff removed arena");
     }
 
     /**

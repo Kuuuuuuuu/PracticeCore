@@ -35,29 +35,21 @@ class Commands extends Command
             }
             switch ($args[0]) {
                 case "help":
-                    if (!$sender->hasPermission(Permissions::CORE_ADMIN)) {
-                        $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::RED . "You don't have enough permissions to use this command");
-                        return false;
-                    }
                     $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " make <mode> <world>" . Color::GOLD . " - create new Arena for FFA");
                     $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " spawn <mode>" . Color::GOLD . " - set spawn Arena for FFA");
                     $sender->sendMessage(Color::YELLOW . "/" . $commandLabel . Color::BLUE . " remove <mode>" . Color::GOLD . " - delete Arena for FFA");
-                    $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                    $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                     break;
                 case "make":
                 case "create":
-                    if (!$sender->hasPermission(Permissions::CORE_ADMIN)) {
-                        $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::RED . "You don't have enough permissions to use this command");
-                        return false;
-                    }
                     if (!isset($args[1])) {
                         $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core make <mode> <world>");
-                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                         return false;
                     }
                     if (!isset($args[2])) {
                         $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core make <mode> <world>");
-                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                         return false;
                     }
                     switch ($args[1]) {
@@ -90,13 +82,13 @@ class Commands extends Command
                             }
 
                             break;
-                        case "debuff":
+                        case "Nodebuff":
                             if (!file_exists(Server::getInstance()->getDataPath() . "worlds/" . $args[2])) {
                                 $sender->sendMessage(Color::RED . "World " . $args[2] . " not found");
                             } else {
                                 Server::getInstance()->getWorldManager()->loadWorld($args[2]);
                                 $sender->teleport(Server::getInstance()->getWorldManager()->getWorldByName($args[2])->getSafeSpawn());
-                                Core::getCreator()->setDebuffArena($sender, $args[2]);
+                                Core::getCreator()->setNodebuffArena($sender, $args[2]);
                             }
                             break;
                         case "fist":
@@ -112,19 +104,14 @@ class Commands extends Command
 
                         default:
                             $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core make <mode> <world>");
-                            $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                            $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                             break;
                     }
                     break;
                 case "spawn":
-                    if (!$sender->hasPermission(Permissions::CORE_ADMIN)) {
-                        $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::RED . "You don't have enough permissions to use this command");
-                        return false;
-                    }
-
                     if (!isset($args[1])) {
                         $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core spawn <mode>");
-                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                         return false;
                     }
                     switch ($args[1]) {
@@ -157,12 +144,12 @@ class Commands extends Command
                             }
 
                             break;
-                        case "debuff":
-                            $arena = Core::getCreator()->getDebuffArena();
+                        case "Nodebuff":
+                            $arena = Core::getCreator()->getNodebuffArena();
                             if ($arena != null) {
-                                Core::getCreator()->setDebuffSpawn($sender);
+                                Core::getCreator()->setNodebuffSpawn($sender);
                             } else {
-                                $sender->sendMessage(Core::getPrefix() . Color::RED . "The Debuff world has not registered");
+                                $sender->sendMessage(Core::getPrefix() . Color::RED . "The Nodebuff world has not registered");
                                 $sender->sendMessage(Color::RED . "use /core make <mode>");
                             }
 
@@ -179,18 +166,14 @@ class Commands extends Command
                             break;
                         default:
                             $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core spawn <mode>");
-                            $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                            $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                             break;
                     }
                     break;
                 case "remove":
-                    if (!$sender->hasPermission(Permissions::CORE_ADMIN)) {
-                        $sender->sendMessage(Color::BOLD . "» " . Color::RESET . Color::RED . "You don't have enough permissions to use this command");
-                        return false;
-                    }
                     if (!isset($args[1])) {
                         $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core remove <mode>");
-                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                        $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                         return false;
                     }
                     switch ($args[1]) {
@@ -200,8 +183,8 @@ class Commands extends Command
                         case "combo":
                             Core::getCreator()->removeCombo($sender);
                             break;
-                        case "debuff":
-                            Core::getCreator()->removeDebuff($sender);
+                        case "Nodebuff":
+                            Core::getCreator()->removeNodebuff($sender);
                             break;
                         case "fist":
                             Core::getCreator()->removeFist($sender);
@@ -211,7 +194,7 @@ class Commands extends Command
                             break;
                         default:
                             $sender->sendMessage(Core::getPrefix() . Color::RED . "use /core remove <mode>");
-                            $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, debuff, combo, fist");
+                            $sender->sendMessage(Color::YELLOW . "Modes: " . Color::GOLD . "gapple, Nodebuff, combo, fist, Resistance");
                             break;
                     }
                     break;

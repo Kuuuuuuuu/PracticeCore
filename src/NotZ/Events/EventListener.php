@@ -102,7 +102,7 @@ class EventListener implements Listener
     public function onBreak(BlockBreakEvent $ev)
     {
         $player = $ev->getPlayer();
-        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
+        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
             $ev->cancel();
         }
     }
@@ -110,7 +110,7 @@ class EventListener implements Listener
     public function onPlace(BlockPlaceEvent $ev)
     {
         $player = $ev->getPlayer();
-        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
+        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
             $ev->cancel();
         }
     }
@@ -118,7 +118,7 @@ class EventListener implements Listener
     public function onDrop(PlayerDropItemEvent $ev)
     {
         $player = $ev->getPlayer();
-        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
+        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
             $ev->cancel();
         }
     }
@@ -127,7 +127,7 @@ class EventListener implements Listener
     {
         $player = $ev->getEntity();
         if ($player instanceof Player) {
-            if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
+            if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
                 $player->setMaxHealth(20);
                 $player->setHealth(20);
                 $player->setGamemode(GameMode::ADVENTURE());
@@ -157,7 +157,7 @@ class EventListener implements Listener
     {
         $player = $ev->getEntity();
         if ($player instanceof Player) {
-            if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
+            if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
                 if ($ev->getCause() === EntityDamageEvent::CAUSE_FALL) {
                     $ev->cancel();
                 }
@@ -168,7 +168,7 @@ class EventListener implements Listener
     public function onDeath(PlayerDeathEvent $ev)
     {
         $player = $ev->getPlayer();
-        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
+        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
             $ev->setDrops([]);
             $ev->setDeathMessage("");
             $ev->getPlayer()->setGamemode(GameMode::ADVENTURE());

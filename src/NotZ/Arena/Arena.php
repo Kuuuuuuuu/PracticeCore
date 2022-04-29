@@ -24,8 +24,8 @@ class Arena
             return "Gapple";
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena())) {
             return "Combo";
-        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena())) {
-            return "Debuff";
+        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena())) {
+            return "Nodebuff";
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena())) {
             return "Fist";
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
@@ -49,7 +49,7 @@ class Arena
                     self::onJoinCombo($player);
                     break;
                 case 2:
-                    self::onJoinDebuff($player);
+                    self::onJoinNodebuff($player);
                     break;
                 case 3:
                     self::onJoinFist($player);
@@ -62,13 +62,13 @@ class Arena
         });
         $gapple = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getGappleArena());
         $combo = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getComboArena());
-        $debuff = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getDebuffArena());
+        $Nodebuff = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getNodebuffArena());
         $fist = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getFistArena());
         $resis = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getResistanceArena());
         $form->setTitle("§cBerry §ePractice Core");
         $form->addButton("§6Gapple\n" . $gapple, 0, "textures/items/apple_golden.png");
         $form->addButton("§6Combo\n" . $combo, 0, "textures/items/feather.png");
-        $form->addButton("§6Debuff\n" . $debuff, 0, "textures/items/potion_bottle_splash_saturation.png");
+        $form->addButton("§6Nodebuff\n" . $Nodebuff, 0, "textures/items/potion_bottle_splash_saturation.png");
         $form->addButton("§6Fist\n" . $fist, 0, "textures/items/beef_cooked.png");
         $form->addButton("§6Resistance\n" . $resis, 0, "textures/items/snowball.png");
         $form->sendToPlayer($player);
@@ -197,10 +197,10 @@ class Arena
         $inventory->addItem(VanillaItems::ENCHANTED_GOLDEN_APPLE()->setCount(8));
     }
 
-    public function onJoinDebuff(Player $player): void
+    public function onJoinNodebuff(Player $player): void
     {
-        $world = Core::getCreator()->getDebuffArena();
-        $x = Core::getCreator()->getDebuffSpawn();
+        $world = Core::getCreator()->getNodebuffArena();
+        $x = Core::getCreator()->getNodebuffSpawn();
         if ($world != null) {
             Server::getInstance()->getWorldManager()->loadWorld($world);
             $player->setGamemode(Gamemode::ADVENTURE());
@@ -212,7 +212,7 @@ class Arena
             $player->setHealth(20);
             $player->getHungerManager()->setFood(20);
             $player->setScale(1);
-            self::getKitDebuff($player);
+            self::getKitNodebuff($player);
             $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)->getSafeSpawn());
             $player->teleport(new Vector3($x[0], $x[1] + 0.6, $x[2]));
             self::playSound($player, 'jump.slime');
@@ -221,7 +221,7 @@ class Arena
         }
     }
 
-    public function getKitDebuff(Player $player): void
+    public function getKitNodebuff(Player $player): void
     {
 
         $inventory = $player->getInventory();
@@ -331,7 +331,7 @@ class Arena
             $player->getInventory()->addItem(VanillaItems::GOLDEN_APPLE()->setCount(1));
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena())) {
             $player->getInventory()->addItem(VanillaItems::ENCHANTED_GOLDEN_APPLE()->setCount(1));
-        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getDebuffArena())) {
+        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena())) {
             $player->getInventory()->addItem(VanillaItems::HEALING_SPLASH_POTION()->setCount(22));
             $player->getInventory()->addItem(VanillaItems::SWIFTNESS_SPLASH_POTION()->setCount(1));
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena())) {
