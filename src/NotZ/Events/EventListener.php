@@ -7,19 +7,20 @@ use NotZ\utils\FormAPI\CustomForm;
 use NotZ\utils\FormAPI\SimpleForm;
 use pocketmine\entity\projectile\SplashPotion;
 use pocketmine\event\block\{BlockBreakEvent, BlockPlaceEvent};
-use pocketmine\event\entity\{EntityDamageByEntityEvent,
-    EntityDamageEvent,
-    EntityTeleportEvent,
-    ProjectileHitBlockEvent
-};
+use pocketmine\event\entity\{EntityDamageByEntityEvent, EntityDamageEvent, ProjectileHitBlockEvent};
 use pocketmine\event\Listener;
 use pocketmine\event\player\{PlayerDeathEvent, PlayerDropItemEvent, PlayerItemUseEvent, PlayerRespawnEvent};
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\item\enchantment\{EnchantmentInstance, VanillaEnchantments};
 use pocketmine\item\EnderPearl;
 use pocketmine\item\PotionType;
 use pocketmine\item\VanillaItems;
+use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
+use pocketmine\network\mcpe\protocol\LevelSoundEventPacket;
+use pocketmine\network\mcpe\protocol\types\inventory\UseItemOnEntityTransactionData;
+use pocketmine\network\mcpe\protocol\types\LevelSoundEvent;
 use pocketmine\player\GameMode;
 use pocketmine\player\Player;
 use pocketmine\Server;
@@ -112,6 +113,7 @@ class EventListener implements Listener
     {
         $player = $event->getPlayer();
         $player->setGamemode(GameMode::ADVENTURE());
+        Core::getCPSCounter()->initPlayerClickData($player);
         $player->getInventory()->clearAll();
         $player->getArmorInventory()->clearAll();
         $item = VanillaItems::IRON_SWORD()->setCustomName('§aPlay §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));
@@ -125,6 +127,7 @@ class EventListener implements Listener
         $player = $event->getPlayer();
         $player->setGamemode(GameMode::ADVENTURE());
         $player->getInventory()->clearAll();
+        Core::getCPSCounter()->removePlayerClickData($player);
         $player->getArmorInventory()->clearAll();
         $player->kill();
     }
@@ -150,18 +153,6 @@ class EventListener implements Listener
         $player = $ev->getPlayer();
         if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
             $ev->cancel();
-        }
-    }
-
-    public function onChange(EntityTeleportEvent $ev)
-    {
-        $player = $ev->getEntity();
-        if ($player instanceof Player) {
-            if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena()) or $player->getWorld() === Server::getInstance()->getWorldManager()->getDefaultWorld()) {
-                $player->setMaxHealth(20);
-                $player->setHealth(20);
-                $player->setGamemode(GameMode::ADVENTURE());
-            }
         }
     }
 
@@ -211,5 +202,16 @@ class EventListener implements Listener
         $item2 = VanillaItems::BOW()->setCustomName('§bSettings §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));
         $player->getInventory()->setItem(8, $item2);
         $player->getInventory()->setItem(4, $item);
+    }
+
+    public function onDataPacketReceive(DataPacketReceiveEvent $event): void
+    {
+        $player = $event->getOrigin()->getPlayer();
+        $packet = $event->getPacket();
+        if ($packet instanceof InventoryTransactionPacket or $packet instanceof LevelSoundEventPacket) {
+            if ($packet::NETWORK_ID === InventoryTransactionPacket::NETWORK_ID && $packet->trData instanceof UseItemOnEntityTransactionData or $packet::NETWORK_ID === LevelSoundEventPacket::NETWORK_ID && $packet->sound === LevelSoundEvent::ATTACK_NODAMAGE) {
+                Core::getCPSCounter()->addClick($player);
+            }
+        }
     }
 }

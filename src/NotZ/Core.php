@@ -4,6 +4,7 @@
 namespace NotZ;
 
 use NotZ\Arena\{Arena, ArenaCreator};
+use NotZ\Events\CPSCounter;
 use NotZ\Events\EventListener;
 use NotZ\Execute\Commands;
 use NotZ\Execute\HUB;
@@ -13,6 +14,7 @@ class Core extends PluginBase
 {
     private static Arena $arena;
     private static ArenaCreator $creator;
+    private static CPSCounter $cps;
     private static self $instance;
 
     public static function getCreator(): ArenaCreator
@@ -35,16 +37,22 @@ class Core extends PluginBase
         return "§cBerry §f>> ";
     }
 
+    public static function getCPSCounter(): CPSCounter
+    {
+        return self::$cps;
+    }
+
     public function onLoad(): void
     {
         Core::$creator = new ArenaCreator();
         Core::$arena = new Arena();
         Core::$instance = $this;
+        Core::$cps = new CPSCounter();
     }
 
     public function onEnable(): void
     {
-
+        $this->getScheduler()->scheduleRepeatingTask(new ScoreTagTask(), 3);
         $this->getServer()->getCommandMap()->register("core", new Commands());
         $this->getServer()->getCommandMap()->register("hub", new HUB());
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);

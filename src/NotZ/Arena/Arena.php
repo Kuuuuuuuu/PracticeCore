@@ -248,7 +248,7 @@ class Arena
         $sword->addEnchantment(new EnchantmentInstance($unbreaking, 2));
         $inventory->addItem($sword);
         $inventory->addItem(VanillaItems::ENDER_PEARL()->setCount(16));
-        $inventory->addItem(VanillaItems::HEALING_SPLASH_POTION()->setCount(22));
+        $inventory->addItem(VanillaItems::STRONG_HEALING_SPLASH_POTION()->setCount(22));
         $inventory->addItem(VanillaItems::SWIFTNESS_SPLASH_POTION()->setCount(1));
     }
 
@@ -332,7 +332,7 @@ class Arena
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena())) {
             $player->getInventory()->addItem(VanillaItems::ENCHANTED_GOLDEN_APPLE()->setCount(1));
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena())) {
-            $player->getInventory()->addItem(VanillaItems::HEALING_SPLASH_POTION()->setCount(22));
+            $player->getInventory()->addItem(VanillaItems::STRONG_HEALING_SPLASH_POTION()->setCount(22));
             $player->getInventory()->addItem(VanillaItems::SWIFTNESS_SPLASH_POTION()->setCount(1));
         } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena())) {
             $player->getInventory()->addItem(VanillaItems::STEAK());
