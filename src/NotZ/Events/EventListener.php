@@ -8,7 +8,7 @@ use NotZ\utils\FormAPI\SimpleForm;
 use pocketmine\event\block\{BlockBreakEvent, BlockPlaceEvent};
 use pocketmine\event\entity\{EntityDamageByEntityEvent, EntityDamageEvent, EntityTeleportEvent};
 use pocketmine\event\Listener;
-use pocketmine\event\player\{PlayerDeathEvent, PlayerDropItemEvent, PlayerInteractEvent, PlayerRespawnEvent};
+use pocketmine\event\player\{PlayerDeathEvent, PlayerDropItemEvent, PlayerItemUseEvent, PlayerRespawnEvent};
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\item\enchantment\{EnchantmentInstance, VanillaEnchantments};
@@ -23,10 +23,23 @@ class EventListener implements Listener
 {
     private array $pearlcd = [];
 
-    public function onInteract(PlayerInteractEvent $e)
+    public function onUseItem(PlayerItemUseEvent $e)
     {
         $player = $e->getPlayer();
         $item = $e->getItem();
+        if ($item instanceof EnderPearl) {
+            $cooldown = 10;
+            $player = $event->getPlayer();
+            if (isset($this->pearlcd[$player->getName()]) and time() - $this->pearlcd[$player->getName()] < $cooldown) {
+                $event->cancel();
+                $time = time() - $this->pearlcd[$player->getName()];
+                $message = (Core::getPrefix() . "§bEnder Pearl Cooldown §e{cooldown}");
+                $message = str_replace("{cooldown}", ($cooldown - $time), $message);
+                $player->sendMessage($message);
+            } else {
+                $this->pearlcd[$player->getName()] = time();
+            }
+        }
         if ($item->getCustomName() === '§bSettings §f| §bClick to use') {
             $this->mForm($player);
         } else if ($item->getCustomName() === '§aPlay §f| §bClick to use') {
@@ -135,24 +148,6 @@ class EventListener implements Listener
         }
     }
 
-    public function onEnderPearl(PlayerInteractEvent $event)
-    {
-        $item = $event->getItem();
-        if ($item instanceof EnderPearl) {
-            $cooldown = 10;
-            $player = $event->getPlayer();
-            if (isset($this->pearlcd[$player->getName()]) and time() - $this->pearlcd[$player->getName()] < $cooldown) {
-                $event->cancel();
-                $time = time() - $this->pearlcd[$player->getName()];
-                $message = (Core::getPrefix() . "§bEnder Pearl Cooldown §e{cooldown}");
-                $message = str_replace("{cooldown}", ($cooldown - $time), $message);
-                $player->sendMessage($message);
-            } else {
-                $this->pearlcd[$player->getName()] = time();
-            }
-        }
-    }
-
     public function onDamageFall(EntityDamageEvent $ev)
     {
         $player = $ev->getEntity();
@@ -178,8 +173,8 @@ class EventListener implements Listener
             if ($cause instanceof EntityDamageByEntityEvent) {
                 $damager = $cause->getDamager();
                 if ($damager instanceof Player) {
-                    foreach ($damager->getWorld()->getPlayers() as $players) {
-                        $players->sendMessage(Core::getPrefix() . Color::RED . $player->getName() . Color::GRAY . " was killed by " . Color::GREEN . $damager->getName());
+                    foreach([$damager, $player] as $p) {
+                        $p->sendMessage(Core::getPrefix() . Color::RED . $player->getName() . Color::GRAY . " was killed by " . Color::GREEN . $damager->getName());
                     }
                     Core::getArena()->getReKit($damager);
                     $damager->setHealth($damager->getMaxHealth());
