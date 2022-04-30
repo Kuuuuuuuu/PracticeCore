@@ -9,7 +9,12 @@ use pocketmine\entity\projectile\SplashPotion;
 use pocketmine\event\block\{BlockBreakEvent, BlockPlaceEvent};
 use pocketmine\event\entity\{EntityDamageByEntityEvent, EntityDamageEvent, ProjectileHitBlockEvent};
 use pocketmine\event\Listener;
-use pocketmine\event\player\{PlayerDeathEvent, PlayerDropItemEvent, PlayerItemUseEvent, PlayerRespawnEvent};
+use pocketmine\event\player\{PlayerDeathEvent,
+    PlayerDropItemEvent,
+    PlayerExhaustEvent,
+    PlayerItemUseEvent,
+    PlayerRespawnEvent
+};
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
@@ -134,6 +139,14 @@ class EventListener implements Listener
             if ($player instanceof Player && $player->isAlive() && $projectile->getPosition()->distance($player->getPosition()) <= 3) {
                 $player->setHealth($player->getHealth() + 3.5);
             }
+        }
+    }
+
+    public function onExhaust(PlayerExhaustEvent $event): void
+    {
+        $player = $event->getPlayer();
+        if ($player->getHungerManager()->getFood() <= 20) {
+            $player->getHungerManager()->setFood(20);
         }
     }
 

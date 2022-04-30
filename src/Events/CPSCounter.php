@@ -24,7 +24,7 @@ class CPSCounter
             if (count($this->clicksData[mb_strtolower($p->getName())]) >= 50) {
                 array_pop($this->clicksData[mb_strtolower($p->getName())]);
             }
-            $p->sendTip(Core::COLOR . "CPS§f: " . $this->getClicks($p));
+            $p->sendTip(Core::COLOR . $this->getClicks($p));
         }
     }
 
