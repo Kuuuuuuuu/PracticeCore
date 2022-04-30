@@ -1,8 +1,6 @@
 <?php
 
-namespace NotZ\utils\FormAPI;
-
-use NotZ\utils\FormAPI\Form;
+namespace Kuu\utils\FormAPI;
 
 class CustomForm extends Form
 {

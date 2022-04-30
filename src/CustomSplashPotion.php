@@ -1,6 +1,6 @@
 <?php
 
-namespace NotZ;
+namespace Kuu;
 
 use pocketmine\entity\Location;
 use pocketmine\entity\projectile\SplashPotion as SplashPotionEntity;

@@ -1,6 +1,6 @@
 <?php
 
-namespace NotZ\utils\FormAPI;
+namespace Kuu\utils\FormAPI;
 
 use pocketmine\form\Form as IForm;
 use pocketmine\player\Player;

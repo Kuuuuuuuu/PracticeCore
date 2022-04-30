@@ -1,8 +1,8 @@
 <?php
 
-namespace NotZ\Execute;
+namespace Kuu\Execute;
 
-use NotZ\Core;
+use Kuu\Core;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\item\enchantment\{EnchantmentInstance, VanillaEnchantments};
@@ -28,7 +28,7 @@ class HUB extends Command
             $sender->setGamemode(GameMode::ADVENTURE());
             $sender->setScale(1);
             $sender->setAllowFlight(false);
-            $sender->teleport(Core::getInstance()->getServer()->getWorldManager()->getDefaultWorld()->getSafeSpawn());
+            $sender->teleport(Core::getInstance()->getServer()->getWorldManager()->getDefaultWorld()?->getSafeSpawn());
             $sender->sendMessage(Core::getPrefix() . "§bWelcome to Spawn§e " . $sender->getName());
             $item = VanillaItems::IRON_SWORD()->setCustomName('§aPlay §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));
             $item2 = VanillaItems::BOW()->setCustomName('§bSettings §f| §bClick to use')->addEnchantment(new EnchantmentInstance(VanillaEnchantments::UNBREAKING(), 10));

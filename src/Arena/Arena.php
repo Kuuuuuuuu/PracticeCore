@@ -1,9 +1,9 @@
 <?php
 
-namespace NotZ\Arena;
+namespace Kuu\Arena;
 
-use NotZ\Core;
-use NotZ\utils\FormAPI\SimpleForm;
+use Kuu\Core;
+use Kuu\utils\FormAPI\SimpleForm;
 use pocketmine\entity\effect\EffectInstance;
 use pocketmine\entity\effect\VanillaEffects;
 use pocketmine\item\{VanillaItems};
@@ -18,23 +18,7 @@ use pocketmine\utils\TextFormat as Color;
 class Arena
 {
 
-    public function getMode(Player $player): string
-    {
-        if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getGappleArena())) {
-            return "Gapple";
-        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getComboArena())) {
-            return "Combo";
-        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getNodebuffArena())) {
-            return "Nodebuff";
-        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getFistArena())) {
-            return "Fist";
-        } else if ($player->getWorld() === Server::getInstance()->getWorldManager()->getWorldByName(Core::getCreator()->getResistanceArena())) {
-            return "Resistance";
-        }
-        return "None";
-    }
-
-    public function getForm(Player $player): SimpleForm
+    public function getForm(Player $player): void
     {
         $form = new SimpleForm(function (Player $player, int $data = null) {
             $result = $data;
@@ -43,44 +27,42 @@ class Arena
             }
             switch ($result) {
                 case 0:
-                    self::onJoinGapple($player);
+                    $this->onJoinGapple($player);
                     break;
                 case 1:
-                    self::onJoinCombo($player);
+                    $this->onJoinCombo($player);
                     break;
                 case 2:
-                    self::onJoinNodebuff($player);
+                    $this->onJoinNodebuff($player);
                     break;
                 case 3:
-                    self::onJoinFist($player);
+                    $this->onJoinFist($player);
                     break;
                 case 4:
-                    self::onJoinResistance($player);
+                    $this->onJoinResistance($player);
                     break;
             }
             return true;
         });
-        $gapple = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getGappleArena());
-        $combo = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getComboArena());
-        $Nodebuff = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getNodebuffArena());
-        $fist = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getFistArena());
-        $resis = "§eCurrently Playing§0:§b " . self::getPlayers(Core::getCreator()->getResistanceArena());
-        $form->setTitle("§cBerry §ePractice Core");
+        $gapple = "§eCurrently Playing§0:§b " . $this->getPlayers(Core::getCreator()->getGappleArena());
+        $combo = "§eCurrently Playing§0:§b " . $this->getPlayers(Core::getCreator()->getComboArena());
+        $Nodebuff = "§eCurrently Playing§0:§b " . $this->getPlayers(Core::getCreator()->getNodebuffArena());
+        $fist = "§eCurrently Playing§0:§b " . $this->getPlayers(Core::getCreator()->getFistArena());
+        $resis = "§eCurrently Playing§0:§b " . $this->getPlayers(Core::getCreator()->getResistanceArena());
+        $form->setTitle(Core::getPluginName() . " §ePractice Core");
         $form->addButton("§6Gapple\n" . $gapple, 0, "textures/items/apple_golden.png");
         $form->addButton("§6Combo\n" . $combo, 0, "textures/items/feather.png");
         $form->addButton("§6Nodebuff\n" . $Nodebuff, 0, "textures/items/potion_bottle_splash_saturation.png");
         $form->addButton("§6Fist\n" . $fist, 0, "textures/items/beef_cooked.png");
         $form->addButton("§6Resistance\n" . $resis, 0, "textures/items/snowball.png");
         $form->sendToPlayer($player);
-        return $form;
-
     }
 
     public function onJoinGapple(Player $player): void
     {
         $world = Core::getCreator()->getGappleArena();
         $x = Core::getCreator()->getGappleSpawn();
-        if ($world != null) {
+        if ($world !== null) {
             Server::getInstance()->getWorldManager()->loadWorld($world);
             $player->setGamemode(Gamemode::ADVENTURE());
             $player->getInventory()->clearAll();
@@ -91,14 +73,12 @@ class Arena
             $player->setHealth(20);
             $player->getHungerManager()->setFood(20);
             $player->setScale(1);
-            self::getKitGapple($player);
-            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)->getSafeSpawn());
+            $this->getKitGapple($player);
+            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)?->getSafeSpawn());
             $player->teleport(new Vector3($x[0], $x[1] + 0.6, $x[2]));
-            self::playSound($player, 'jump.slime');
-
-
+            $this->playSound($player, 'jump.slime');
         } else {
-            $player->sendMessage(Core::getPrefix() . Color::RED . "Arena not available");
+            $player->sendMessage(Core::getPrefix() . "Arena not available");
         }
     }
 
@@ -146,7 +126,7 @@ class Arena
     {
         $world = Core::getCreator()->getComboArena();
         $x = Core::getCreator()->getComboSpawn();
-        if ($world != null) {
+        if ($world !== null) {
             Server::getInstance()->getWorldManager()->loadWorld($world);
             $player->setGamemode(Gamemode::ADVENTURE());
             $player->getInventory()->clearAll();
@@ -157,14 +137,12 @@ class Arena
             $player->setHealth(20);
             $player->getHungerManager()->setFood(20);
             $player->setScale(1);
-            self::getKitCombo($player);
-            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)->getSafeSpawn());
+            $this->getKitCombo($player);
+            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)?->getSafeSpawn());
             $player->teleport(new Vector3($x[0], $x[1] + 0.6, $x[2]));
-            self::playSound($player, 'jump.slime');
-
-
+            $this->playSound($player, 'jump.slime');
         } else {
-            $player->sendMessage(Core::getPrefix() . Color::RED . "Arena not available");
+            $player->sendMessage(Core::getPrefix() . "Arena not available");
         }
     }
 
@@ -201,7 +179,7 @@ class Arena
     {
         $world = Core::getCreator()->getNodebuffArena();
         $x = Core::getCreator()->getNodebuffSpawn();
-        if ($world != null) {
+        if ($world !== null) {
             Server::getInstance()->getWorldManager()->loadWorld($world);
             $player->setGamemode(Gamemode::ADVENTURE());
             $player->getInventory()->clearAll();
@@ -212,12 +190,12 @@ class Arena
             $player->setHealth(20);
             $player->getHungerManager()->setFood(20);
             $player->setScale(1);
-            self::getKitNodebuff($player);
-            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)->getSafeSpawn());
+            $this->getKitNodebuff($player);
+            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)?->getSafeSpawn());
             $player->teleport(new Vector3($x[0], $x[1] + 0.6, $x[2]));
-            self::playSound($player, 'jump.slime');
+            $this->playSound($player, 'jump.slime');
         } else {
-            $player->sendMessage(Core::getPrefix() . Color::RED . "Arena not available");
+            $player->sendMessage(Core::getPrefix() . "Arena not available");
         }
     }
 
@@ -256,7 +234,7 @@ class Arena
     {
         $world = Core::getCreator()->getFistArena();
         $x = Core::getCreator()->getFistSpawn();
-        if ($world != null) {
+        if ($world !== null) {
             Server::getInstance()->getWorldManager()->loadWorld($world);
             $player->setGamemode(Gamemode::ADVENTURE());
             $player->getInventory()->clearAll();
@@ -268,13 +246,12 @@ class Arena
             $player->setHealth(20);
             $player->getHungerManager()->setFood(20);
             $player->setScale(1);
-            self::getKitFist($player);
-            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)->getSafeSpawn());
+            $this->getKitFist($player);
+            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)?->getSafeSpawn());
             $player->teleport(new Vector3($x[0], $x[1] + 0.6, $x[2]));
-            self::playSound($player, 'jump.slime');
-
+            $this->playSound($player, 'jump.slime');
         } else {
-            $player->sendMessage(Core::getPrefix() . Color::RED . "Arena not available");
+            $player->sendMessage(Core::getPrefix() . "Arena not available");
         }
     }
 
@@ -288,7 +265,7 @@ class Arena
     {
         $world = Core::getCreator()->getResistanceArena();
         $x = Core::getCreator()->getResistanceSpawn();
-        if ($world != null) {
+        if ($world !== null) {
             Server::getInstance()->getWorldManager()->loadWorld($world);
             $player->setGamemode(Gamemode::ADVENTURE());
             $player->getInventory()->clearAll();
@@ -299,12 +276,12 @@ class Arena
             $player->setHealth(20);
             $player->getHungerManager()->setFood(20);
             $player->setScale(1);
-            self::getKitResistance($player);
-            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)->getSafeSpawn());
+            $this->getKitResistance($player);
+            $player->teleport(Server::getInstance()->getWorldManager()->getWorldByName($world)?->getSafeSpawn());
             $player->teleport(new Vector3($x[0], $x[1] + 0.6, $x[2]));
-            self::playSound($player, 'jump.slime');
+            $this->playSound($player, 'jump.slime');
         } else {
-            $player->sendMessage(Core::getPrefix() . Color::RED . "Arena not available");
+            $player->sendMessage(Core::getPrefix() . "Arena not available");
         }
     }
 
@@ -320,9 +297,8 @@ class Arena
     {
         if (!Server::getInstance()->getWorldManager()->getWorldByName($arena)) {
             return Color::DARK_RED . "Unloaded World";
-        } else {
-            return count(Server::getInstance()->getWorldManager()->getWorldByName($arena)->getPlayers());
         }
+        return count(Server::getInstance()->getWorldManager()->getWorldByName($arena)->getPlayers());
     }
 
     public function getReKit(Player $player): void

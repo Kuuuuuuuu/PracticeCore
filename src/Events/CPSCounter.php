@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace NotZ\Events;
+namespace Kuu\Events;
 
+use Kuu\Core;
 use pocketmine\player\Player;
 use function array_filter;
 use function array_unshift;
@@ -23,13 +24,13 @@ class CPSCounter
             if (count($this->clicksData[mb_strtolower($p->getName())]) >= 50) {
                 array_pop($this->clicksData[mb_strtolower($p->getName())]);
             }
-            $p->sendTip("§cCPS§f:" . $this->getClicks($p));
+            $p->sendTip(Core::COLOR . "CPS§f: " . $this->getClicks($p));
         }
     }
 
     public function getClicks(Player $player): float
     {
-        if (!isset($this->clicksData[mb_strtolower($player->getName())]) or empty($this->clicksData[mb_strtolower($player->getName())])) {
+        if (!isset($this->clicksData[mb_strtolower($player->getName())]) || empty($this->clicksData[mb_strtolower($player->getName())])) {
             return 0;
         }
         $ct = microtime(true);

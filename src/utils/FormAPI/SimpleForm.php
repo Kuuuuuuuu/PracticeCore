@@ -1,6 +1,6 @@
 <?php
 
-namespace NotZ\utils\FormAPI;
+namespace Kuu\utils\FormAPI;
 
 class SimpleForm extends Form
 {

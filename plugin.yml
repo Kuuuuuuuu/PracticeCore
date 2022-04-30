@@ -1,4 +1,7 @@
 name: Practice
-main: NotZ\Core
-version: 1.0.0
+main: Kuu\Core
+src-namespace-prefix: Kuu
+version: 1.2.0
 api: 4.0.0
+load: POSTWORLD
+author: Kuuuuuuuu
