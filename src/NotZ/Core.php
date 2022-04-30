@@ -63,7 +63,6 @@ class Core extends PluginBase
         @mkdir($this->getDataFolder());
         @mkdir($this->getDataFolder() . "players/");
         @mkdir($this->getDataFolder() . "data/");
-        $this->saveResource("/settings.yml");
     }
 
     public static function getInstance(): Core
